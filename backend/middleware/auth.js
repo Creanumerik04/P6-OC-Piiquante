@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 // On importe nos variables d'environnement
 require("dotenv").config();
 
+// On exporte notre module
 module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1] || process.env.USER_TOKEN;
@@ -16,7 +17,7 @@ module.exports = (req, res, next) => {
       userId: userId,
     };
     // Ajouter le token à la réponse de l'API
-    // res.setHeader("X-Auth-Token", token);
+    res.setHeader("X-Auth-Token", token);
     next();
   } catch (error) {
     res.status(401).json({ error });
