@@ -16,9 +16,9 @@ const storage = multer.diskStorage({
     },
     // On indique à multer le nom d'origine et qu'il doit remplacer les espaces par des underscores
     filename: (req, file, callback) => {
-        const name = file.originalname.split(" ").join("_");
+        const name = file.originalname.split(" ").join("_").split(".")[0];
         const extension = MIME_TYPES[file.mimetype];
-        callback(null, name + Date.now() + "." + extension);
+        callback(null, name + "_" + Date.now() + "." + extension);
     }
 });
 

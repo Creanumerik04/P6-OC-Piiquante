@@ -12,12 +12,18 @@ require("dotenv").config();
 
 // Fonction inscription pour créer un nouvel utilisateur
 exports.signup = (req, res, next) => {
+  const {email, password} = req.body
+
+  // Vérification de la longueur du mot de passe
+  if (password.length < 10) {
+    return res.status(400).json({error : "Mot de passe trop court, minimum 10 caractères"})
+  }
   // On hash le mot de passe
   bcrypt
-    .hash(req.body.password, 10)
+    .hash(password, 10)
     .then((hash) => {
       const user = new User({ // On créé un modèle utilisateur avec son mail et son password hashé
-        email: req.body.email,
+        email: email,
         password: hash,
       });
       // On sauvegarde l'utilisateur dans la base de données
